@@ -1,1 +1,70 @@
-//
+//Defined
+$mainColor: #68A856;
+$white: #fff;
+$red: red;
+
+//Common CSS
+.container{
+    max-width: 900px;
+}
+
+.vsee-navbar{
+
+}
+
+.footer{
+    padding-top: 40px;
+    .copyright{
+        text-align: center;
+
+        > strong {
+            color: $mainColor;
+        }
+    }
+}
+
+
+//Waiting form title
+.waiting-room-title{
+    text-align: center;
+
+    > h1{
+        font-size: 24px;
+    }
+}
+
+.waiting-form{
+    border-radius: 4px;
+    overflow: hidden;
+    border:1px solid $mainColor;
+
+    .waiting-form_title{
+        background-color: $mainColor;
+        color: $white;
+        padding: 8px 10px;
+    }
+
+    .waiting-message{
+        font-size: 24px;
+        text-align: center;
+        font-weight: bold;
+        margin: 40px 0;
+    }
+
+    .waiting-form_body{
+        padding: 10px;
+
+        .required-mark{
+            color: $red;
+        }
+
+        label{
+            font-weight: bold;
+        }
+
+        .btn-warning{
+            color: #fff;
+            font-weight: bold;
+        }
+    }
+}

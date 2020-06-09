@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'IndexController@index');
+Route::post('/join-room', 'IndexController@joinRoom')->name('join-room');
+Route::post('/exit-room', 'IndexController@joinRoom')->name('exit-room');
+
+
+Route::prefix('admin')->group(function () {
+    Route::get('/', 'AdminController@index')->name('admin-index');
 });
+
+
