@@ -8,21 +8,30 @@
         <p>If this is an emergency, please call 911.</p>
     </div>
     <div class="waiting-form w-75 m-auto">
-        <div class="waiting-form_title" data-bind="if: waiting">
+        <div class="waiting-form_title">
             <i class="fa fa-clock-o"></i> Connecting with your provider
         </div>
-        <div class="waiting-form_body text-center" data-bind="if: waiting">
-            <div class="waiting-message">
-                Your provider will be with you shortly
+        <div class="waiting-form_body text-center">
+            <div data-bind="ifnot: calling">
+                <div class="waiting-message" data-bind="if: waiting">
+                    Your provider will be with you shortly
+                </div>
+
+                <div class="waiting-message" data-bind="if: busy">
+                    Doctor is currently busy and will attend to you soon
+                </div>
+
+                <form action="{{route('index')}}" method="get" id="backIndexForm">
+                    <button class="btn btn-warning" type="button" id="btnLeavingRoom">Exit waiting room</button>
+                </form>
+                <hr/>
+                <p>If you close the video conference by mistake, please <a href="#">click here to relaunch video</a> again.</p>
             </div>
 
-            <form class="" action="{{route('exit-room')}}" method="post">
-                {{csrf_field()}}
-                <button class="btn btn-warning" type="submit">Exit waiting room</button>
-            </form>
+            <div class="waiting-message" data-bind="if: calling">
+                The visit is in progress
+            </div>
 
-            <hr/>
-            <p>If you close the video conference by mistake, please <a href="#">click here to relaunch video</a> again.</p>
         </div>
     </div>
 @endsection
@@ -37,67 +46,10 @@
     <script>
         //PUBNUB
         const chanelName = 'waiting_room';
-
-        //Init pubnub
-        const uuid = PubNub.generateUUID();
-        const pubnub = new PubNub({
-            publishKey: '{{config('constants.pubnub.publishKey')}}',
-            subscribeKey: '{{config('constants.pubnub.subscribeKey')}}',
-            uuid: uuid
-        });
-
-        pubnub.addListener({
-            message: function(event) {
-                console.log('Received message', event);
-            },
-            presence: function(event) {
-                console.log('presence', event);
-            },
-            status: function(event) {
-                if (event.category == 'PNConnectedCategory') {
-                    //Push a message to notify the admin have someone join the room
-                    pubnub.publish(
-                        {
-                            channel: chanelName,
-                            message: {
-                                "event" : 'join',
-                                "data" : {
-                                    "vsee_id": "{{$vsee_id}}",
-                                    "name": "{{$name}}",
-                                    "reason": "{{$reason}}"
-                                }
-                            }
-                        },
-                        function(status, response) {
-
-                            if(status.error){
-                                console.error('Publish message failed',status);
-                            }
-                        }
-                    );
-                }
-            }
-        });
-
-        pubnub.subscribe({
-            channels: [chanelName],
-            withPresence: true
-        });
-
-        submitUpdate = function(anEntry, anUpdate) {
-            pubnub.publish({
-                    channel : chanelName,
-                    message : {'entry' : anEntry, 'update' : anUpdate}
-                },
-                function(status, response) {
-                    if (status.error) {
-                        console.log(status)
-                    }
-                    else {
-                        displayMessage('[PUBLISH: sent]',
-                            'timetoken: ' + response.timetoken);
-                    }
-                });
-        };
+        const VSeeData = {
+            "vsee_id": "{{$vsee_id}}",
+            "name": "{{$name}}",
+            "reason": "{{$reason}}"
+        }
     </script>
 @endsection

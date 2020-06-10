@@ -21,7 +21,7 @@ class IndexController extends Controller
     public function joinRoom(Request $request){
         //Validate input
         $request->validate([
-            'vsee_id' => 'required|min:4',
+            'vsee_id' => 'required|email',
         ]);
 
         $params = [

@@ -58,3 +58,48 @@
   font-weight: bold;
 }
 
+.waiting-users .waiting-user_item {
+  padding: 10px;
+  display: flex;
+  text-align: left;
+}
+
+.waiting-users .waiting-user_item .waiting-user_icon {
+  display: flex;
+  font-size: 46px;
+  color: #555555;
+}
+
+.waiting-users .waiting-user_item .waiting-user_info {
+  flex: 1;
+  margin-left: 10px;
+  color: #333;
+}
+
+.waiting-users .waiting-user_item .waiting-user_info .waiting-user_name {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 20px;
+  margin-bottom: 5px;
+}
+
+.waiting-users .waiting-user_item .waiting-user_info .waiting-user_reason {
+  margin-bottom: 0;
+  color: #777;
+}
+
+.waiting-users .waiting-user_item .waiting-user_info .waiting-user_id {
+  margin-bottom: 0;
+  color: #777;
+}
+
+.waiting-users .waiting-user_item .waiting-user_status {
+  padding-right: 30px;
+  padding-left: 10px;
+}
+
+.waiting-form_empty {
+  text-align: center;
+  padding: 40px;
+}
+

@@ -34,7 +34,7 @@
                 </div>
                 <div class="form-group">
                     <label for="vsee_id">VSee ID <span class="required-mark">*</span></label>
-                    <input type="text" class="form-control" name="vsee_id" id="vsee_id" value="{{old('vsee_id')}}" required aria-required="true" placeholder="Your vsee id for doctor to call">
+                    <input type="email" class="form-control" name="vsee_id" id="vsee_id" value="{{old('vsee_id')}}" required aria-required="true" placeholder="Your vsee id for doctor to call">
                 </div>
                 <button class="btn btn-warning" type="submit">Enter waiting room</button>
             </form>

@@ -81,23 +81,48 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/app.js":
-/*!*****************************!*\
-  !*** ./resources/js/app.js ***!
-  \*****************************/
+/***/ "./resources/js/admin.js":
+/*!*******************************!*\
+  !*** ./resources/js/admin.js ***!
+  \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var app = {
+var admin = {
   init: function init() {
     this.initKnockout();
     this.initPubnub();
-    this.initLeaveButton();
+    this.initButtons();
+  },
+  initKnockout: function initKnockout() {
+    var self = this;
+    self.patients = ko.observableArray([]);
+    ko.applyBindings({
+      patients: self.patients
+    }); //Add function
+
+    var durationCalculate = function durationCalculate(date, element) {
+      var duration = moment.duration(date.diff(new Date()));
+      var minutes = Math.abs(duration.asMinutes());
+      $(element).text(Math.round(minutes));
+    };
+
+    ko.bindingHandlers.Duration = {
+      update: function update(element, valueAccessor) {
+        var value = valueAccessor();
+        var date = moment(value);
+        durationCalculate(date, element); //Run interval
+
+        setInterval(function () {
+          durationCalculate(date, element);
+        }, 1000 * 60);
+      }
+    };
   },
   initPubnub: function initPubnub() {
     var self = this; //Init pubnub
@@ -108,105 +133,71 @@ var app = {
     }));
     self.pubnub.addListener({
       message: function message(event) {
-        console.log('Received message', event);
-
-        if (event.message.type === 'call') {
-          self.vm.waiting(false);
-          self.vm.busy(false);
-          self.vm.calling(true);
-        } else if (event.message.type == 'callOther' && event.message.data.vsee_id != VSeeData.vsee_id) {
-          self.vm.waiting(false);
-          self.vm.calling(false);
-          self.vm.busy(true);
+        if (event.message.type == 'join') {
+          self.patients.push(event.message.data);
         }
       },
       presence: function presence(event) {
-        console.log('presence', event);
-      },
-      status: function status(event) {
-        if (event.category == 'PNConnectedCategory') {
-          //Push a message to notify the admin have someone join the room
-          var joinData = $.extend({
-            uuid: uuid,
-            date: new Date()
-          }, VSeeData);
-          self.pubnub.publish({
-            channel: chanelName,
-            message: {
-              "type": 'join',
-              "data": joinData
-            }
-          }, function (status, response) {
-            if (status.error) {
-              console.error('Publish message failed', status);
-            }
+        if (event.action === 'leave' || event.action === 'timeout') {
+          //Remove patients
+          self.patients.remove(function (patient) {
+            return patient.uuid === event.uuid;
           });
         }
       }
     });
     self.pubnub.subscribe({
-      //Subscribe to 2 chanel: main room channel and specified channel
-      channels: [chanelName, chanelName + '_' + VSeeData.vsee_id],
+      channels: ['waiting_room'],
       withPresence: true
-    }); //Represent send
-
-    window.onbeforeunload = function () {
-      //Push a message to notify admin that user leaving
-      self.pubnub.unsubscribe({
-        channels: [chanelName]
-      });
-    };
+    });
   },
-  initKnockout: function initKnockout() {
+  initButtons: function initButtons() {
     var self = this;
-
-    function ViewModel() {
-      this.waiting = ko.observable(true);
-      this.busy = ko.observable(false);
-      this.calling = ko.observable(false);
-    }
-
-    self.vm = new ViewModel(); //KO Bindings
-
-    ko.applyBindings(this.vm);
-  },
-  initLeaveButton: function initLeaveButton() {
-    var self = this;
-    $('body').on('click', '#btnLeavingRoom', function (e) {
+    $('body').on('click', '#btnCall', function (e) {
       e.preventDefault();
-      self.pubnub.unsubscribe({
-        channels: ['waiting_room']
+      var patientId = $(this).data('vseeid'); //Call user
+
+      self.pubnub.publish({
+        channel: 'waiting_room_' + patientId,
+        message: {
+          "type": 'call'
+        }
+      }, function (status, response) {
+        if (status.error) {
+          console.error('Publish message failed', status);
+        }
+      }); //Push message to other user
+
+      self.pubnub.publish({
+        channel: 'waiting_room',
+        message: {
+          "type": 'callOther',
+          'data': {
+            vsee_id: patientId
+          }
+        }
+      }, function (status, response) {
+        if (status.error) {
+          console.error('Publish message failed', status);
+        }
       });
-      $('#backIndexForm').submit();
     });
   }
 };
 $(document).ready(function () {
-  app.init();
+  admin.init();
 });
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/***/ 1:
+/*!*************************************!*\
+  !*** multi ./resources/js/admin.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Code\vsee_demo\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Code\vsee_demo\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! D:\Code\vsee_demo\resources\js\admin.js */"./resources/js/admin.js");
 
 
 /***/ })

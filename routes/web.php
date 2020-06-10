@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'IndexController@index');
+Route::get('/', 'IndexController@index')->name('index');
 Route::post('/join-room', 'IndexController@joinRoom')->name('join-room');
 Route::post('/exit-room', 'IndexController@joinRoom')->name('exit-room');
 

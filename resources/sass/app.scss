@@ -68,3 +68,51 @@ $red: red;
         }
     }
 }
+
+//Waiting rooms
+.waiting-users{
+    .waiting-user_item{
+        padding: 10px;
+        display: flex;
+        text-align: left;
+
+        .waiting-user_icon{
+            display: flex;
+            font-size: 46px;
+            color: #555555;
+        }
+
+        .waiting-user_info{
+            flex: 1;
+            margin-left: 10px;
+            color: #333;
+
+            .waiting-user_name{
+                font-size: 18px;
+                font-weight: bold;
+                line-height: 20px;
+                margin-bottom: 5px;
+            }
+
+            .waiting-user_reason{
+                margin-bottom: 0;
+                color: #777;
+            }
+
+            .waiting-user_id{
+                margin-bottom: 0;
+                color: #777;
+            }
+        }
+
+        .waiting-user_status{
+            padding-right: 30px;
+            padding-left: 10px;
+        }
+    }
+}
+
+.waiting-form_empty{
+    text-align: center;
+    padding: 40px;
+}
