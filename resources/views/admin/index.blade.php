@@ -50,5 +50,5 @@
     <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.27.4.min.js"></script>
 
     <!-- Page app.js -->
-    <script src="{{asset('/js/admin.js')}}"></script>
+    <script src="{{secure_asset('/js/admin.js')}}"></script>
 @endsection
