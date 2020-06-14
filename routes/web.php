@@ -23,3 +23,8 @@ Route::prefix('admin')->group(function () {
 });
 
 
+Route::prefix('elastic')->group(function () {
+    Route::get('/', 'ElasticSearchController@index')->name('elastic-index');
+    Route::get('/search', 'ElasticSearchController@search')->name('elastic-search');
+});
+
