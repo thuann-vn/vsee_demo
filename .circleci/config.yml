@@ -8,6 +8,9 @@ jobs:
     docker:
       # Specify the version you desire here
       - image: circleci/php:7.4-node-browsers
+        environment:
+          PGHOST: 127.0.0.1
+          PGUSER: root
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -18,13 +21,19 @@ jobs:
       #
       # - image: redis:2.8.19
       - image: circleci/postgres:latest
-
+        environment:
+          POSTGRES_USER: vsee
+          POSTGRES_PASSWORD: "vsee123!@#"
+          POSTGRES_DB: vsee_db
     steps:
       - checkout
 
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
-
+      - run:
+          name: "Create Environment file"
+          command: |
+            mv .env.test .env
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -34,7 +43,7 @@ jobs:
             - v1-dependencies-
 
       - run: composer install -n --prefer-dist
-
+      - run: php artisan key:generate
       - save_cache:
           key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
