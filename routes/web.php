@@ -28,3 +28,7 @@ Route::prefix('elastic')->group(function () {
     Route::get('/search', 'ElasticSearchController@search')->name('elastic-search');
 });
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
