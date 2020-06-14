@@ -2,15 +2,29 @@
 
 namespace App;
 
-use Elasticquent\ElasticquentTrait;
 use Illuminate\Database\Eloquent\Model;
+use ScoutElastic\Searchable;
 
 class Posts extends Model
 {
-    use ElasticquentTrait;
-    //
-    function getIndexName()
-    {
-        return "post_index";
-    }
+    use Searchable;
+
+    protected $indexConfigurator = MyIndexConfigurator::class;
+
+    protected $searchRules = [
+        //
+        MySearchRule::class
+    ];
+
+    // Here you can specify a mapping for model fields
+    protected $mapping = [
+        'properties' => [
+            'title' => [
+                'type' => 'text'
+            ],
+            'description' => [
+                'type' => 'text'
+            ],
+        ]
+    ];
 }
