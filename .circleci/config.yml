@@ -30,6 +30,9 @@ jobs:
 
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
+      - run: sudo apt-get install libpq-dev
+      - run: sudo docker-php-ext-install pdo_pgsql
+      - run: sudo docker-php-ext-enable pdo_pgsql
       - run:
           name: "Create Environment file"
           command: |
