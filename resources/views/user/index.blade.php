@@ -26,7 +26,7 @@
                 {{csrf_field()}}
                 <div class="form-group">
                     <label for="name">Please fill your name to process</label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{old('name')}}" placeholder="Your name">
+                    <input type="text" class="form-control" id="name" name="name" value="{{old('name', auth()->user()->name)}}" placeholder="Your name">
                 </div>
                 <div class="form-group">
                     <label for="reason">Reason for visit</label>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="form-group">
                     <label for="vsee_id">VSee ID <span class="required-mark">*</span></label>
-                    <input type="email" class="form-control" name="vsee_id" id="vsee_id" value="{{old('vsee_id')}}" required aria-required="true" placeholder="Your vsee id for doctor to call">
+                    <input type="email" class="form-control" name="vsee_id" id="vsee_id" value="{{old('vsee_id', auth()->user()->email)}}" required aria-required="true" placeholder="Your vsee id for doctor to call">
                 </div>
                 <button class="btn btn-warning" type="submit">Enter waiting room</button>
             </form>
