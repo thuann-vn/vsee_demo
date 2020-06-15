@@ -197,7 +197,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Code\vsee_demo\resources\js\admin.js */"./resources/js/admin.js");
+module.exports = __webpack_require__(/*! /home/vagrant/vsee/resources/js/admin.js */"./resources/js/admin.js");
 
 
 /***/ })

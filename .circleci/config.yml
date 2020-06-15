@@ -5,6 +5,10 @@
 version: 4
 jobs:
   build:
+    branches:
+      only:
+        - master
+        - development
     docker:
       # Specify the version you desire here
       - image: circleci/php:7.4-node-browsers

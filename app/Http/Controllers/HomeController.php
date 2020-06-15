@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class HomeController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -15,11 +17,12 @@ class AdminController extends Controller
     }
 
     /**
-     * Show index page to admin
-     * @return View
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
-        return view('admin.index');
+        return view('home');
     }
 }

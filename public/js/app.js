@@ -205,8 +205,8 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Code\vsee_demo\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Code\vsee_demo\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/vagrant/vsee/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/vagrant/vsee/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

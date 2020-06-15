@@ -1,0 +1,121 @@
+// Variables
+@import 'variables';
+
+//Defined
+$mainColor: #68A856;
+$white: #fff;
+$red: red;
+
+//Common CSS
+.container{
+    max-width: 900px;
+}
+
+.vsee-navbar{
+
+}
+
+.footer{
+    padding-top: 40px;
+    .copyright{
+        text-align: center;
+
+        > strong {
+            color: $mainColor;
+        }
+    }
+}
+
+
+//Waiting form title
+.waiting-room-title{
+    text-align: center;
+
+    > h1{
+        font-size: 24px;
+    }
+}
+
+.waiting-form{
+    border-radius: 4px;
+    overflow: hidden;
+    border:1px solid $mainColor;
+
+    .waiting-form_title{
+        background-color: $mainColor;
+        color: $white;
+        padding: 8px 10px;
+    }
+
+    .waiting-message{
+        font-size: 24px;
+        text-align: center;
+        font-weight: bold;
+        margin: 40px 0;
+    }
+
+    .waiting-form_body{
+        padding: 10px;
+
+        .required-mark{
+            color: $red;
+        }
+
+        label{
+            font-weight: bold;
+        }
+
+        .btn-warning{
+            color: #fff;
+            font-weight: bold;
+        }
+    }
+}
+
+//Waiting rooms
+.waiting-users{
+    .waiting-user_item{
+        padding: 10px;
+        display: flex;
+        text-align: left;
+
+        .waiting-user_icon{
+            display: flex;
+            font-size: 46px;
+            color: #555555;
+        }
+
+        .waiting-user_info{
+            flex: 1;
+            margin-left: 10px;
+            color: #333;
+
+            .waiting-user_name{
+                font-size: 18px;
+                font-weight: bold;
+                line-height: 20px;
+                margin-bottom: 5px;
+            }
+
+            .waiting-user_reason{
+                margin-bottom: 0;
+                color: #777;
+            }
+
+            .waiting-user_id{
+                margin-bottom: 0;
+                color: #777;
+            }
+        }
+
+        .waiting-user_status{
+            padding-right: 30px;
+            padding-left: 10px;
+        }
+    }
+}
+
+.waiting-form_empty{
+    text-align: center;
+    padding: 40px;
+}
